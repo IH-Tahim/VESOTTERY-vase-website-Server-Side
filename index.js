@@ -24,6 +24,7 @@ async function run() {
         const database = client.db('vesottery');
         //Collection Name variables
         const productCollection = database.collection('products');
+        const orderCollection = database.collection('allOrders');
         const reviewCollection = database.collection('reviews');
         const blogCollection = database.collection('blogs');
 
@@ -35,6 +36,11 @@ async function run() {
         })
 
 
+        //Get HOME Products Function
+        app.get('/homeproducts', async (req, res) => {
+            const result = await productCollection.find({}).toArray();
+            res.json(result);
+        })
         //Get Products Function
         app.get('/products', async (req, res) => {
             const result = await productCollection.find({}).toArray();
@@ -48,6 +54,22 @@ async function run() {
             const query = { _id: ObjectId(orderId) };
             const result = await productCollection.findOne(query);
             res.json(result);
+        })
+
+        //Post Place order By Email Id
+        app.post('/placeorder', async (req, res) => {
+            const orderDetails = req.body;
+            const result = await orderCollection.insertOne(orderDetails);
+            res.json(result);
+        })
+
+        //Get My Orders By Email Id
+        app.get('/myorders/:email', async (req, res) => {
+            const userEmail = req.params.email;
+            console.log(userEmail);
+            const result = await orderCollection.find({ email: userEmail }).toArray();
+            res.json(result);
+            console.log(result);
         })
 
 
