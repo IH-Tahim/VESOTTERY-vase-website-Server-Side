@@ -88,7 +88,7 @@ async function run() {
             const query = { email: email };
             const user = await userCollection.findOne(query);
 
-            if (user?.role === 'admin') {
+            if (await user?.role === 'admin') {
                 res.json({ admin: true });
             } else {
                 res.json({ admin: false });
