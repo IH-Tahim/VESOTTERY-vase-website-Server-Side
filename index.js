@@ -21,10 +21,25 @@ async function run() {
         await client.connect();
 
         //Database Name
-        const database = client.db('ass-12');
+        const database = client.db('vesottery');
         //Collection Name variables
-        const serviceCollection = database.collection('services');
+        const productCollection = database.collection('products');
+        const reviewCollection = database.collection('reviews');
         const blogCollection = database.collection('blogs');
+
+
+        //Get Blogs Function
+        app.get('/blogs', async (req, res) => {
+            const result = await blogCollection.find({}).toArray();
+            res.json(result);
+        })
+
+
+        //Get Products Function
+        app.get('/products', async (req, res) => {
+            const result = await productCollection.find({}).toArray();
+            res.json(result);
+        })
 
 
     }
@@ -39,7 +54,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('running my crud server')
+    res.send("running VESOTTERY's server")
 });
 app.listen(port, () => {
     console.log("running on port:", port);
