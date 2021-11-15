@@ -87,10 +87,13 @@ async function run() {
             const email = req.params.email;
             const query = { email: email };
             const user = await userCollection.findOne(query);
-            let isAdmin = false;
+            let isAdmin = undefined;
             if (user?.role === 'admin') {
-                isAdmin = true;
+                let isAdmin = true;
+            } else {
+                isAdmin = false;
             }
+
             res.json({ admin: isAdmin });
         })
 
