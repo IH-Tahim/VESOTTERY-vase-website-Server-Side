@@ -42,6 +42,15 @@ async function run() {
         })
 
 
+        //Get Place Order By OrderId
+        app.get('/placeorder/:id', async (req, res) => {
+            const orderId = req.params.id;
+            const query = { _id: ObjectId(orderId) };
+            const result = await serviceCollection.findOne(query);
+            res.json(result);
+        })
+
+
     }
     finally {
         // await client.close();
