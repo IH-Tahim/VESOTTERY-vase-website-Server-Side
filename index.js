@@ -25,6 +25,7 @@ async function run() {
         //Collection Name variables
         const productCollection = database.collection('products');
         const orderCollection = database.collection('allOrders');
+        const userCollection = database.collection('users');
         const reviewCollection = database.collection('reviews');
         const blogCollection = database.collection('blogs');
 
@@ -38,7 +39,7 @@ async function run() {
 
         //Get HOME Products Function
         app.get('/homeproducts', async (req, res) => {
-            const result = await productCollection.find({}).toArray();
+            const result = await productCollection.find({}).limit(6).toArray();
             res.json(result);
         })
         //Get Products Function
@@ -70,6 +71,15 @@ async function run() {
             const result = await orderCollection.find({ email: userEmail }).toArray();
             res.json(result);
             console.log(result);
+        })
+
+
+        //Save USer Data
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await userCollection.insertOne(user);
+            console.log(result);
+            res.json(result);
         })
 
 
