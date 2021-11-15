@@ -78,7 +78,7 @@ async function run() {
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await userCollection.insertOne(user);
-            console.log(result);
+
             res.json(result);
         })
 
@@ -89,7 +89,17 @@ async function run() {
             const options = { upsert: true };
             const updateDoc = { $set: user };
             const result = await userCollection.updateOne(filter, updateDoc, options);
-            console.log(result);
+
+            res.json(result);
+        })
+
+        // Make New Admin
+        app.put('/admin', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const updateDoc = { $set: { role: "admin" } };
+            const result = await userCollection.updateOne(filter, updateDoc);
+
             res.json(result);
         })
 
