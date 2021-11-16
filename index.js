@@ -73,6 +73,38 @@ async function run() {
             console.log(result);
         })
 
+        //Delete from My Order and All Orders
+        app.delete('/myorders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.json(result);
+        })
+
+        //Get All Orders
+        app.get('/allorders', async (req, res) => {
+            const result = await orderCollection.find({}).toArray();
+            res.json(result);
+        })
+
+        //Add Product Function 
+        app.post('/addproduct', async (req, res) => {
+            const newProduct = req.body;
+            const result = await productCollection.insertOne(newProduct);
+            res.json(result);
+            console.log(result);
+
+        })
+
+        //Add Review Function 
+        app.post('/addreview', async (req, res) => {
+            const newReview = req.body;
+            const result = await reviewCollection.insertOne(newReview);
+            res.json(result);
+            console.log(result);
+
+        })
+
 
         //Save USer Data
         app.post('/users', async (req, res) => {
@@ -97,7 +129,7 @@ async function run() {
 
         })
 
-        //user Put
+        //user Put Foor Google Logins
         app.put('/users', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
