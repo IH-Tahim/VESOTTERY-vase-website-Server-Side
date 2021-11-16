@@ -48,6 +48,14 @@ async function run() {
             res.json(result);
         })
 
+        //Delete Product by id
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(query);
+            res.json(result);
+        })
+
 
         //Get Place Order By OrderId
         app.get('/placeorder/:id', async (req, res) => {
@@ -97,12 +105,18 @@ async function run() {
         })
 
         //Add Review Function 
-        app.post('/addreview', async (req, res) => {
+        app.post('/review', async (req, res) => {
             const newReview = req.body;
             const result = await reviewCollection.insertOne(newReview);
             res.json(result);
             console.log(result);
 
+        })
+
+        //Get All Reviews
+        app.get('/review', async (req, res) => {
+            const result = await reviewCollection.find({}).toArray();
+            res.json(result);
         })
 
 
