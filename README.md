@@ -5,6 +5,7 @@
 - Node JS
 - Express JS
 - Mongo DB
+- Heroku
 - Nodemon
 
 ### Api's
