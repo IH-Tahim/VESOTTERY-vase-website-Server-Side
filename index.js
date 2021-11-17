@@ -165,6 +165,16 @@ async function run() {
         })
 
 
+        // Update Product Status
+        app.put('/shipped/:id', async (req, res) => {
+            const orderId = req.params.id;
+            const query = { _id: ObjectId(orderId) };
+            const updateDoc = { $set: { status: "shipped" } };
+            const result = await orderCollection.updateOne(query, updateDoc);
+            res.json(result);
+        })
+
+
     }
     finally {
         // await client.close();
